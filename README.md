@@ -1,7 +1,7 @@
 # Pokecatch
 
 - [ ] index.html, visar lite vad vårat projekt handlar om.
-- [ ] pokecatch.html, spelar spelet där man kan fånga pokémonen.
+- [ ] pokecatch.html, spelar spelet där man kan fånga pokémons.
   - [ ] Kunna välja karaktär och namn. 
 - [ ] pokedex.html, se alla pokémons som man har fångat samt alla pokémons.
 

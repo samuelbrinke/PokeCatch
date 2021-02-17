@@ -9,7 +9,7 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
+  <body class="min-h-screen">
     <header class="header flex justify-between items-center bg-gray-800 text-white px-3">
       <div class="logo p-3">
         <a href="./">
@@ -25,7 +25,40 @@
       </nav>
     </header>
 
-    <main></main>
+    <main class="my-8">
+      <section class="pokedex container mx-auto px-6">
+        <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6">
+          <div class="card w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden bg-gray-200">
+            <img class="h-40 mx-auto not-collected" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vi/omegaruby-alphasapphire/1.png" alt="" />
+            <div class="card-content px-5 py-3">
+              <h3 class="text-gray-700 font-medium uppercase">Test</h3>
+              <p class="text-gray-500 mt-2">testtest</p>
+            </div>
+          </div>
+          <div class="card w-full mx-auto rounded-lg shadow-lg overflow-hidden bg-gray-200">
+            <img class="h-40 mx-auto not-collected" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/500.gif" alt="" />
+            <div class="card-content px-5 py-3">
+              <h3 class="text-gray-700 font-medium uppercase">Test</h3>
+              <p class="text-gray-500 mt-2">testtest</p>
+            </div>
+          </div>
+          <div class="card w-full mx-auto rounded-lg shadow-lg overflow-hidden bg-gray-200">
+            <img class="h-40 mx-auto" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/500.gif" alt="" />
+            <div class="card-content px-5 py-3">
+              <h3 class="text-gray-700 font-medium uppercase">Test</h3>
+              <p class="text-gray-500 mt-2">testtest</p>
+            </div>
+          </div>
+          <div class="card w-full mx-auto rounded-lg shadow-lg overflow-hidden bg-gray-200">
+            <img class="h-40 mx-auto" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/500.gif" alt="" />
+            <div class="card-content px-5 py-3">
+              <h3 class="text-gray-700 font-medium uppercase">Test</h3>
+              <p class="text-gray-500 mt-2">testtest</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <footer class="footer bg-gray-800 text-white">
       <div class="container mx-auto">

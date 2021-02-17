@@ -1,0 +1,68 @@
+.pokebattle {
+  background-image: url(../img/battle-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.pokebattle-wrapper {
+  height: 100vh;
+}
+
+.pokebattle-content {
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+
+.info-border {
+  padding: 10px;
+  background-color: white;
+  box-shadow: 1px 1px 27px 0px rgb(0 0 0 / 49%) inset;
+  border: 7px solid black;
+  border-radius: 5px;
+  position: absolute;
+  min-width: 200px;
+}
+
+.character-info-border {
+  top: 160px;
+  left: 350px;
+}
+
+.pokemon-info-border {
+  right: 350px;
+}
+
+.pokemon-platform {
+  margin-top: 70px;
+  margin-right: 355px;
+  margin-left: auto;
+  background: #1cb700;
+  border-radius: 38% 70% 37% 71%;
+  width: 400px;
+  height: 160px;
+  border: 8px solid darkgreen;
+  box-shadow: 1px 1px 74px 0px rgba(0,0,0,0.75) inset;
+}
+.pokemon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.character-platform {
+  background: #1cb700;
+  border-radius: 38% 70% 37% 71%;
+  width: 400px;
+  height: 160px;
+  border: 8px solid darkgreen;
+  box-shadow: 1px 1px 74px 0px rgba(0,0,0,0.75) inset;
+
+  margin-left: 355px;
+}
+
+.character .character-img {
+  margin: auto;
+}

@@ -8,6 +8,8 @@
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/pokecatch.css" />
+
   </head>
   <body>
     <header class="header flex justify-between items-center bg-gray-800 text-white px-3">
@@ -26,23 +28,46 @@
     </header>
 
     <main>
-      <div class="pokebattle">
-        <img class="poke-img" src="" alt="" width="100px">
-        <p class="poke-name"></p>
-      </div>
+      <section class="pokebattle">
+        <div class="pokebattle-wrapper flex flex-col">
+          <h1 class="text-4xl text-center mt-3 text-white">Gotta catch em' all!</h1>
+          <div class="pokebattle-content">
+            <div class="character-info-border info-border">
+              <p>Ash Ketchup</p>
+              <p>LVL: 99</p>
+            </div>
+            <div class="pokemon-info-border info-border">
+              <p>Bulbasaur</p>
+              <p>LVL: 49</p>
+            </div>
+            <div class="pokemon-platform ml-auto">
+              <div class="pokemon">
+                <img class="poke-img" src="" alt="" width="100px">
+                <p class="poke-name"></p>
+              </div>
+            </div>
+            <div class="character-platform">
+              <div class="character">
+                <img class="character-img" src="img/FRLG_Red_Back.png" alt="Character" width="100px">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer bg-gray-800 text-white">
       <div class="container mx-auto">
         <ul>
-          <li class="m-2"><a href="https://github.com/samuelbrinke/PokeCatch">Github</a></li>
-          <li class="m-2"><a href="./">Home</a></li>
-          <li class="m-2"><a href="pokecatch.html">Pokécatch</a></li>
-          <li class="m-2"><a href="pokedex.html">Pokédex</a></li>
+          <li class="p-2"><a href="https://github.com/samuelbrinke/PokeCatch">Github</a></li>
+          <li class="p-2"><a href="./">Home</a></li>
+          <li class="p-2"><a href="pokecatch.html">Pokécatch</a></li>
+          <li class="p-2"><a href="pokedex.html">Pokédex</a></li>
         </ul>
       </div>
     </footer>
 
     <script src="js/fetch.js"></script>
+    <script src="js/pokecatch.js"></script>
   </body>
 </html>

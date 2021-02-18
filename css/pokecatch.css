@@ -13,7 +13,17 @@
   position: relative;
   margin-top: auto;
   margin-bottom: auto;
+}
 
+.btn {
+  background-color: #00000075;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.hide {
+  display: none;
 }
 
 .info-border {

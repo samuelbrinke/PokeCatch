@@ -20,16 +20,16 @@ startBtn.addEventListener('click', function() {
     function getRdmChance(max) {
       return Math.floor(Math.random() * max) + 1;
     }
-    
+
     let catchChance = getRdmChance(1);
     console.log(catchChance);
 
     if(catchChance == 1) {
       storePokemon(data.name);
-      console.log("Congrats, You catched the pokémon!");
+      console.log(`Congrats! You catched ${data.name}!`);
       console.log(localStorage);
     } else {
-      console.log("Pokémon ran away!")
+      console.log("The Pokémon ran away!")
     }
   };
   getPokemon();
@@ -43,9 +43,8 @@ startBtn.addEventListener('click', function() {
   pokeBattleContent.classList.remove('hide');
 
   battleAudio.setAttribute('autoplay','');
-  battleSrc.src = '../sounds/battle.mp3'
+  battleSrc.src = './sounds/battle.mp3'
   battleAudio.volume = 0.02;
   pokeBattle.appendChild(battleAudio);
   battleAudio.appendChild(battleSrc);
-
-})
+});

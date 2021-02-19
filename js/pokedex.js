@@ -28,7 +28,7 @@ function createPokemonCards(pokemons) {
     img.src = pokemon.sprites.front_default;
     pokemon.types.forEach((item) => {
       const type = item.type.name;
-      text.innerHTML = `<span class="pokemon-type ${type}">${type}</span>`;
+      text.innerHTML += `<span class="pokemon-type ${type}">${type}</span>`;
     });
 
     pokedex.append(card);

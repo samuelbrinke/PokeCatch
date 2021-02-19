@@ -1,5 +1,6 @@
 .card {
   width: 100%;
+  border-radius: 0.375rem;
   overflow: hidden;
   background-color: rgba(229, 231, 235, 1);
 }
@@ -14,7 +15,7 @@
 }
 
 .card-title {
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
   color: rgba(55, 65, 81, 1);
 }
@@ -25,4 +26,66 @@
 
 .not-collected {
   filter: contrast(0%) brightness(0);
+}
+
+.pokemon-type {
+  padding: 0.1rem 0.8rem;
+  margin-right: 0.2rem;
+  border-radius: 0.375rem;
+  background-color: #a4acaf;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.bug {
+  background-color: #729f3f;
+}
+.dark {
+  background-color: #707070;
+}
+.dragon {
+  background-color: #f16e57;
+}
+.electric {
+  background-color: #eed535;
+}
+.fairy {
+  background-color: #fdb9e9;
+}
+.fighting {
+  background-color: #d56723;
+}
+.fire {
+  background-color: #d33232;
+}
+.flying {
+  background-color: #83b5be;
+}
+.ghost {
+  background-color: #7b62a3;
+}
+.grass {
+  background-color: #9bcc50;
+}
+.ground {
+  background-color: #947d53;
+}
+.ice {
+  background-color: #51c4e7;
+}
+.poison {
+  background-color: #b97fc9;
+}
+.psychic {
+  background-color: #f366b9;
+}
+.rock {
+  background-color: #a38c21;
+}
+.steel {
+  background-color: #9eb7b8;
+}
+.water {
+  background-color: #4592c4;
 }

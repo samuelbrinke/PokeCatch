@@ -1,9 +1,9 @@
 //Random number generator
-function getRanNum(max) {
+function getRdmPokemon(max) {
   return Math.floor(Math.random() * max) + 1;
 }
 
-let randomNum = getRanNum(99);
+let randomNum = getRdmPokemon(99);
 
 let pokeImg = document.querySelector('.poke-img');
 let pokeName = document.querySelector('.poke-name');
@@ -17,18 +17,17 @@ startBtn.addEventListener('click', function() {
     pokeName.innerText = data.name;
     console.log(pokeImg.src)
 
-    let getPokeName = data.name;
-
-    function getRanChance(max) {
+    function getRdmChance(max) {
       return Math.floor(Math.random() * max) + 1;
     }
-    let catched = getRanChance(2);
-    console.log(getRanChance(2));
     
-    if(catched == 1) {
-      localStorage.setItem('PokeName', getPokeName);
-      console.log("You catched the pokémon!");
-      //console.log(localStorage());
+    let catchChance = getRdmChance(1);
+    console.log(catchChance);
+
+    if(catchChance == 1) {
+      storePokemon(data.name);
+      console.log("Congrats, You catched the pokémon!");
+      console.log(localStorage);
     } else {
       console.log("Pokémon ran away!")
     }

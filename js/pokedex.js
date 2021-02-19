@@ -38,7 +38,7 @@ function createPokemonCards(pokemons) {
 async function loadPokemons() {
   if (apiUrl === null) return;
   const response = await getPokemons(apiUrl);
-  console.log(response);
+  apiUrl = response.next;
 
   const pokemons = await Promise.all(
     response.results?.map(async (pokemon) => {
@@ -52,3 +52,13 @@ async function loadPokemons() {
 
 let apiUrl = new URL('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20');
 loadPokemons();
+
+window.addEventListener('scroll', async () => {
+  const height = document.documentElement.scrollHeight;
+  const scroll = document.documentElement.scrollTop;
+  const clientHeight = document.documentElement.clientHeight;
+
+  if (clientHeight + scroll >= height) {
+    await loadPokemons();
+  }
+});

@@ -1,12 +1,19 @@
 const pokedex = document.querySelector('.pokedex-cards');
+const pokedexSearch = document.querySelector('.pokedex-search');
 
 async function getPokemons(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`An error occured: ${response.status}`);
-  return await response.json();
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`An error occured ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    // console.error(error);
+    throw new Error(`An error occured ${error}`);
+  }
 }
 
 function createPokemonCards(pokemons) {
+  if (pokemons == null) return;
   pokemons.forEach((pokemon) => {
     const card = document.createElement('div');
     const img = document.createElement('img');
@@ -25,7 +32,11 @@ function createPokemonCards(pokemons) {
 
     title.textContent = pokemon.name;
 
-    img.src = pokemon.sprites.front_default;
+    img.src =
+      pokemon.sprites.other.dream_world.front_default ??
+      pokemon.sprites.other['official-artwork'].front_default ??
+      '';
+
     pokemon.types.forEach((item) => {
       const type = item.type.name;
       text.innerHTML += `<span class="pokemon-type ${type}">${type}</span>`;
@@ -37,28 +48,60 @@ function createPokemonCards(pokemons) {
 
 async function loadPokemons() {
   if (apiUrl === null) return;
-  const response = await getPokemons(apiUrl);
-  apiUrl = response.next;
+  const response = await getPokemons(apiUrl + apiNextUrl);
 
-  const pokemons = await Promise.all(
-    response.results?.map(async (pokemon) => {
-      const url = new URL(pokemon.url);
-      return await getPokemons(url);
-    })
-  );
+  console.log(response);
+  const promises = response.results?.map((pokemon) => getPokemons(pokemon.url));
+  console.log(promises);
 
-  createPokemonCards(pokemons);
+  await Promise.allSettled(promises).then((results) => {
+    const pokemons = results
+      .filter((result) => result.status === 'fulfilled')
+      .map((result) => result.value);
+
+    // pokemons.forEach(pokemon => createPokemonCard);
+    createPokemonCards(pokemons);
+  });
+
+  apiNextUrl = new URL(response.next).search;
 }
 
-let apiUrl = new URL('https://pokeapi.co/api/v2/pokemon?offset=0&limit=20');
+const apiUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
+let apiNextUrl = '';
+
 loadPokemons();
+enableScroll();
 
-window.addEventListener('scroll', async () => {
-  const height = document.documentElement.scrollHeight;
-  const scroll = document.documentElement.scrollTop;
-  const clientHeight = document.documentElement.clientHeight;
+function enableScroll() {
+  window.onscroll = async () => {
+    const height = document.documentElement.scrollHeight;
+    const scroll = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
 
-  if (clientHeight + scroll >= height) {
-    await loadPokemons();
+    if (clientHeight + scroll >= height) {
+      await loadPokemons();
+    }
+  };
+}
+
+function disableScroll() {
+  window.onscroll = '';
+}
+
+pokedexSearch.addEventListener('search', (e) => {
+  const input = e.currentTarget.value;
+  if (input.length === 0) {
+    pokedex.innerHTML = '';
+    apiNextUrl = '';
+    enableScroll();
+    return loadPokemons();
   }
+  disableScroll();
+  searchPokemon(input);
 });
+
+async function searchPokemon(name) {
+  pokedex.innerHTML = '';
+  const response = await getPokemons(apiUrl + name);
+  createPokemonCards(new Array(response));
+}

@@ -15,21 +15,39 @@
     <header class="header flex justify-between items-center bg-gray-800 text-white px-3">
       <div class="logo p-3">
         <a href="./">
-          <img src="https://fontmeme.com/permalink/210217/cf2d2945017c9a4272efeb0bd88d4980.png" alt="PokéCatch" />
+          <img
+            src="https://fontmeme.com/permalink/210217/cf2d2945017c9a4272efeb0bd88d4980.png"
+            alt="PokéCatch"
+          />
         </a>
       </div>
       <nav class="navbar">
         <ul class="nav flex space-x-4 font-medium">
-          <li class="nav-item hover:text-gray-400"><a href="./" class="nav-link p-1">Home</a></li>
-          <li class="nav-item hover:text-gray-400"><a href="pokecatch.html" class="nav-link p-1">Pokécatch</a></li>
-          <li class="nav-item hover:text-gray-400"><a href="pokedex.html" class="nav-link p-1">Pokédex</a></li>
+          <li class="nav-item hover:text-gray-400">
+            <a href="./" class="nav-link p-1">Home</a>
+          </li>
+          <li class="nav-item hover:text-gray-400">
+            <a href="pokecatch.html" class="nav-link p-1">Pokécatch</a>
+          </li>
+          <li class="nav-item hover:text-gray-400">
+            <a href="pokedex.html" class="nav-link p-1">Pokédex</a>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main class="my-8">
       <section class="pokedex container mx-auto px-6">
-        <div class="pokedex-cards grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6">
+        <div class="flex justify-center mb-14 lg:mx-56">
+          <input
+            class="pokedex-search w-full h-10 px-3 border-2 rounded-md focus:outline-none text-xl"
+            type="search"
+            placeholder="Search..."
+          />
+        </div>
+        <div
+          class="pokedex-cards grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6"
+        >
           <!-- <div class="card">
             <div class="card-content">
               <p class="card-text">
@@ -60,7 +78,9 @@
     <footer class="footer bg-gray-800 text-white">
       <div class="container mx-auto">
         <ul>
-          <li class="p-2"><a href="https://github.com/samuelbrinke/PokeCatch">Github</a></li>
+          <li class="p-2">
+            <a href="https://github.com/samuelbrinke/PokeCatch">Github</a>
+          </li>
           <li class="p-2"><a href="./">Home</a></li>
           <li class="p-2"><a href="pokecatch.html">Pokécatch</a></li>
           <li class="p-2"><a href="pokedex.html">Pokédex</a></li>

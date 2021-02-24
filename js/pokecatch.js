@@ -10,6 +10,11 @@ let pokeName = document.querySelector('.poke-name');
 
 let startBtn = document.querySelector('.start-btn');
 startBtn.addEventListener('click', function() {
+  function characterPlat() {
+  document.querySelector('.character-platform').classList.add('character-platform-animation');
+  document.querySelector('.pokemon-platform').classList.add('pokemon-platform-animation');
+  }
+  setTimeout(characterPlat, 100);
   let pokeBattleContent = document.querySelector('.pokebattle-content')
   let pokeBattle = document.querySelector('.pokebattle-wrapper');
   let battleAudio = document.createElement('audio');
@@ -33,28 +38,64 @@ startBtn.addEventListener('click', function() {
     let throwBtn = document.querySelector('.throw-btn');
 
     throwBtn.addEventListener('click', function() {
+      document.querySelector('.pokeball1').classList.remove('hide2');
       function getRdmChance(max) {
         return Math.floor(Math.random() * max) + 1;
       }
 
       let catchChance = getRdmChance(1);
       console.log(catchChance);
-
+      let pokeball = document.querySelector('.pokeball1');
+      pokeball.classList.add("pokeball1-center");
+      
       if(catchChance == 1) {
         storePokemon(data.name);
         console.log(`Congrats! You caught ${data.name}!`);
         console.log(localStorage);
 
-        battleAudio.remove();
+        let getPokeAnimation = document.querySelector('.pokeball1-center')
+        let getPokeAnimated = document.querySelector('.pokeball')
 
-        let victoryAudio = document.createElement('audio');
-        let victorySrc = document.createElement('source');
-        victorySrc.src = './sounds/catched.mp3'
-        victoryAudio.setAttribute('autoplay','');
-        victoryAudio.volume = 0.02;
+        setTimeout(() => {
+          console.log("animation ended");
+          battleAudio.remove();
+          document.querySelector('#overlay').classList.add('overlay-show');
+          let wobbleAudio = document.createElement('audio');
+          let wobbleSrc = document.createElement('source');
+          wobbleSrc.src = './sounds/wobble.mp3'
+          wobbleAudio.setAttribute('autoplay','');
+          wobbleAudio.volume = 0.02;
+          pokeBattle.appendChild(wobbleAudio);
+          wobbleAudio.appendChild(wobbleSrc);
+          getPokeAnimation.classList.add('hide');
 
-        pokeBattle.appendChild(victoryAudio);
-        victoryAudio.appendChild(victorySrc);
+          function pokeballAnimationTimeout() {
+            getPokeAnimated.classList.remove('hide');
+          }
+          setTimeout(pokeballAnimationTimeout, 1300)
+
+          function victorySound() {
+            let victoryAudio = document.createElement('audio');
+            let victorySrc = document.createElement('source');
+            victorySrc.src = './sounds/catched.mp3'
+            victoryAudio.setAttribute('autoplay','');
+            victoryAudio.volume = 0.02;
+    
+            pokeBattle.appendChild(victoryAudio);
+            victoryAudio.appendChild(victorySrc);
+
+            let getCatchedPokemon = document.createElement('h2');
+            getCatchedPokemon.classList.add('caught-pokemon-title')
+            getCatchedPokemon.innerText = `Congrats! You caught ${data.name}`;
+            pokeBattle.prepend(getCatchedPokemon);
+          }
+
+          setTimeout(() => {
+            victorySound()
+          }, 6000);
+
+        }, 2000);
+
       } else {
         console.log("The Pokémon ran away!")
       }

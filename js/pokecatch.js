@@ -23,11 +23,11 @@ startBtn.addEventListener('click', function() {
   startBtn.classList.add('hide');
   pokeBattleContent.classList.remove('hide');
 
-  // battleAudio.setAttribute('autoplay','');
-  // battleSrc.src = './sounds/battle.mp3'
-  // battleAudio.volume = 0.02;
-  // pokeBattle.appendChild(battleAudio);
-  // battleAudio.appendChild(battleSrc);
+  battleAudio.setAttribute('autoplay','');
+  battleSrc.src = './sounds/battle.mp3'
+  battleAudio.volume = 0.02;
+  pokeBattle.appendChild(battleAudio);
+  battleAudio.appendChild(battleSrc);
 
   async function getPokemon() {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomNum}`);

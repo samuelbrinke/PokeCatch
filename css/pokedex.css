@@ -1,5 +1,37 @@
-.hide {
-  display: none;
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: rgba(59, 130, 246, 1);
+  color: white;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background-color: rgba(37, 99, 235, 1);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.loader {
+  margin: 4rem auto;
+  width: 80px;
+  height: 80px;
+  border: 6px solid transparent;
+  border-radius: 50%;
+  border-top: 6px solid rgb(124, 132, 150);
+  border-bottom: 6px solid rgb(124, 132, 150);
+  animation: loader-spin 1s linear infinite;
+}
+
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .card {
@@ -27,6 +59,10 @@
 .card-text {
   margin-top: 0.5rem;
   color: rgba(107, 114, 128, 1);
+}
+
+.hide {
+  display: none;
 }
 
 .not-collected {

@@ -20,7 +20,7 @@ async function fetchPokemon(name) {
 async function fetchPokemons() {
   if (apiNextUrl === null) return;
   const response = await request(apiUrl + apiNextUrl);
-  apiNextUrl = new URL(response.next).search;
+  apiNextUrl = response.next != null ? new URL(response.next).search : response.next;
 
   const promises = response.results?.map((pokemon) => request(pokemon.url));
 

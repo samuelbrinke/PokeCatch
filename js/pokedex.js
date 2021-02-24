@@ -3,11 +3,13 @@ import { fetchPokemons, fetchPokemon, resetNextUrl } from './fetch.js';
 const pokedex = document.querySelector('.pokedex-cards');
 
 loadPokemons();
+
 async function loadPokemons() {
   const pokemons = await fetchPokemons();
   pokemons.forEach((pokemon) => createPokemonCard(pokemon));
 }
 
+// Auto load more at bottom if enabled
 function enableScroll() {
   window.onscroll = async () => {
     const height = document.documentElement.scrollHeight;
@@ -15,7 +17,7 @@ function enableScroll() {
     const clientHeight = document.documentElement.clientHeight;
 
     if (clientHeight + scroll >= height) {
-      loadPokemons();
+      await loadPokemons();
     }
   };
 }
@@ -24,16 +26,35 @@ function disableScroll() {
   window.onscroll = '';
 }
 
+// Searchbox
 document.querySelector('.pokedex-search').addEventListener('search', async (e) => {
-  const input = e.currentTarget.value;
+  const name = e.currentTarget.value.toLowerCase();
   pokedex.innerHTML = '';
-  if (input.length === 0) {
+
+  disableScroll();
+
+  if (name.length === 0) {
+    toggleLoadButton(true);
     resetNextUrl();
     return loadPokemons();
   }
-  const pokemon = await fetchPokemon(input);
+
+  toggleLoadButton();
+  const pokemon = await fetchPokemon(name);
   createPokemonCard(pokemon);
 });
+
+// Load more button
+document.querySelector('.btn-load-pokemon').addEventListener('click', async () => {
+  toggleLoadButton();
+  await loadPokemons();
+  enableScroll();
+});
+
+function toggleLoadButton(show = false) {
+  if (show === true) document.querySelector('.btn-load-pokemon').classList.remove('hide');
+  else document.querySelector('.btn-load-pokemon').classList.add('hide');
+}
 
 function createPokemonCard(pokemon) {
   if (pokemon == null) return;

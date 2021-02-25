@@ -5,8 +5,10 @@ const pokedex = document.querySelector('.pokedex-cards');
 loadPokemons();
 
 async function loadPokemons() {
+  toggleLoader(true);
   const pokemons = await fetchPokemons();
-  pokemons.forEach((pokemon) => createPokemonCard(pokemon));
+  pokemons?.forEach((pokemon) => createPokemonCard(pokemon));
+  toggleLoader();
 }
 
 // Auto load more at bottom if enabled
@@ -56,6 +58,11 @@ function toggleLoadButton(show = false) {
   else document.querySelector('.btn-load-pokemon').classList.add('hide');
 }
 
+function toggleLoader(show = false) {
+  if (show === true) document.querySelector('.loader').classList.remove('hide');
+  else document.querySelector('.loader').classList.add('hide');
+}
+
 function createPokemonCard(pokemon) {
   if (pokemon == null) return;
   // pokemons.forEach((pokemon) => {
@@ -79,7 +86,7 @@ function createPokemonCard(pokemon) {
   img.src =
     pokemon.sprites.other.dream_world.front_default ??
     pokemon.sprites.other['official-artwork'].front_default ??
-    '';
+    '#';
   img.alt = pokemon.name;
   img.loading = 'lazy';
 

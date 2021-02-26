@@ -1,5 +1,5 @@
 let pokeBattle = document.querySelector('.pokebattle-wrapper');
-
+let pokeBattleContent = document.querySelector('.pokebattle-content');
 function sound(soundPath) {
   let createAudioTag = document.createElement('audio');
   let createSourceTag = document.createElement('source'); 
@@ -20,7 +20,7 @@ startBtn.addEventListener('click', function() {
   let battleSoundPath = './sounds/battle.mp3';
   sound(battleSoundPath);
 
-  let pokeBattleContent = document.querySelector('.pokebattle-content');
+
   pokeBattleContent.classList.remove('hide');
 
   function showBattlePlatform() {
@@ -48,21 +48,20 @@ startBtn.addEventListener('click', function() {
     let throwBtn = document.querySelector('.throw-btn');
 
     throwBtn.addEventListener('click', function() {
+      throwBtn.classList.add('hide');
       document.querySelector('.pokeball1').classList.remove('hide2');
 
       function getRdmChance(max) {
         return Math.floor(Math.random() * max) + 1;
       }
-      let catchChance = getRdmChance(1);
+      let catchChance = getRdmChance(2);
       //console.log(catchChance);
 
-      let pokeball = document.querySelector('.pokeball1');
-      pokeball.classList.add("pokeball1-center");
+      let pokeballThrow = document.querySelector('.pokeball1');
+      pokeballThrow.classList.add("pokeball1-center");
       
-
+      let pokeballAnimated = document.querySelector('.pokeball')
       function catchPokemon() {
-        let pokeballThrow = document.querySelector('.pokeball1-center')
-        let pokeballAnimated = document.querySelector('.pokeball')
 
         setTimeout(() => {
           console.log("animation ended");
@@ -83,14 +82,39 @@ startBtn.addEventListener('click', function() {
 
         }, 2000);
       };
-    
+      
+      function getCatchMessage(catchMessage) {
+        let catchMessageTag = document.createElement('h2');
+        let refreshPage = document.querySelector('.refresh-btn');
+        let goToPokedex = document.querySelector('.go-to-pokedex-btn');
+        let goToPokedexLink = document.querySelector('.pokedex-link');
+
+        if(catchChance == 1) {
+          refreshPage.classList.remove('hide');
+          goToPokedex.classList.remove('hide');
+
+          refreshPage.innerText = 'Catch more pokemons';
+          refreshPage.addEventListener('click', function () {
+            window.location.reload();
+          });
+          goToPokedexLink.innerText = 'Check out your pokedex';
+        } else {
+          refreshPage.classList.remove('hide');
+          refreshPage.classList.add('refresh-btn');
+          refreshPage.innerText = 'Try again';
+          refreshPage.addEventListener('click', function () {
+            window.location.reload();
+          });
+        }
+
+        catchMessageTag.classList.add('caught-pokemon-title');
+        catchMessageTag.innerText = catchMessage;
+        pokeBattleContent.prepend(catchMessageTag);
+      };
+
       function catchSound(catchMessage, catchSoundPath) {
         sound(catchSoundPath);
-
-        let catchMessageTag = document.createElement('h2');
-        catchMessageTag.classList.add('caught-pokemon-title')
-        catchMessageTag.innerText = catchMessage;
-        pokeBattle.prepend(catchMessageTag);
+        getCatchMessage(catchMessage);
       };
       if(catchChance == 1) {
         storePokemon(data.name);
@@ -107,7 +131,8 @@ startBtn.addEventListener('click', function() {
         catchPokemon();
 
         setTimeout(function() {
-          catchSound(`Oh no! ${data.name} ran away...`), '';
+          pokeballAnimated.classList.add('fade');
+          catchSound(`Oh no! ${data.name} ran away...`, './sounds/pokeball-open.mp3');
         }, 8000);
 
       }

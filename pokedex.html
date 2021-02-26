@@ -77,6 +77,86 @@
           <button class="btn btn-load-pokemon">Load more Pokémon</button>
         </div>
       </section>
+
+      <section class="modal">
+        <div class="modal-content shadow-lg w-full min-h-full sm:min-h-0 sm:max-w-lg sm:m-8">
+          <header class="relative w-full rounded-b-3xl overflow-hidden">
+            <button class="modal-btn focus:outline-none p-2 absolute right-2 top-2">
+              <svg
+                class="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                ></path>
+              </svg>
+            </button>
+            <img
+              class="modal-img"
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+              alt=""
+            />
+          </header>
+
+          <main class="max-w-lg w-full py-5 flex flex-col items-center sm:px-5">
+            <h2 class="pokemon-name py-3 font-bold text-3xl text-center">Bulbasaur</h2>
+
+            <div class="types text-center">
+              <div class="pokemon-type poison">poison</div>
+              <div class="pokemon-type rock">rock</div>
+            </div>
+
+            <div class="details text-center flex justify-evenly py-8 w-80">
+              <div><span class="details-weight block font-medium text-2xl">6.9 KG</span>Weight</div>
+              <div><span class="details-height block font-medium text-2xl">0.7 M</span>Height</div>
+            </div>
+
+            <div class="stats w-full px-4">
+              <h3 class="text-2xl font-semibold text-center">Base Stats</h3>
+
+              <ul class="stats-list my-3">
+                <li class="flex flex-row items-stretch py-1">
+                  <p class="font-semibold w-12">HP</p>
+                  <div class="progress">
+                    <div class="progress-done hp" style="width: 70%">200/300</div>
+                  </div>
+                </li>
+
+                <li class="flex flex-row items-stretch py-1">
+                  <p class="font-semibold w-12">ATK</p>
+                  <div class="progress">
+                    <div class="progress-done atk" style="width: 70%">200/300</div>
+                  </div>
+                </li>
+
+                <li class="flex flex-row items-stretch py-1">
+                  <p class="font-semibold w-12">DEF</p>
+                  <div class="progress">
+                    <div class="progress-done def" style="width: 70%">200/300</div>
+                  </div>
+                </li>
+
+                <li class="flex flex-row items-stretch py-1">
+                  <p class="font-semibold w-12">SPD</p>
+                  <div class="progress">
+                    <div class="progress-done spd" style="width: 70%">200/300</div>
+                  </div>
+                </li>
+
+                <li class="flex flex-row items-stretch py-1">
+                  <p class="font-semibold w-12">EXP</p>
+                  <div class="progress">
+                    <div class="progress-done exp" style="width: 70%">200/300</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </main>
+        </div>
+      </section>
     </main>
 
     <footer class="footer bg-gray-800 text-white">

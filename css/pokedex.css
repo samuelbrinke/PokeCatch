@@ -39,6 +39,10 @@
   border-radius: 0.375rem;
   overflow: hidden;
   background-color: rgba(229, 231, 235, 1);
+  cursor: pointer;
+}
+.card > * {
+  pointer-events: none;
 }
 
 .card-img {
@@ -81,7 +85,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 0.375rem;
   background-color: white;
   color: rgb(17, 24, 39);
 }
@@ -102,10 +105,15 @@
 }
 
 .progress-done {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
   padding-right: 0.7rem;
   border-radius: 1rem;
   text-align: right;
   color: white;
+  font-size: 0.75rem;
 }
 
 .hide {
@@ -113,7 +121,13 @@
 }
 
 .not-collected {
+  cursor: auto;
+}
+.not-collected > img {
   filter: contrast(0%) brightness(0);
+}
+.not-collected > .card-content {
+  display: none;
 }
 
 .pokemon-type {

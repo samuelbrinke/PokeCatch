@@ -54,7 +54,7 @@ startBtn.addEventListener('click', function() {
       function getRdmChance(max) {
         return Math.floor(Math.random() * max) + 1;
       }
-      let catchChance = getRdmChance(1);
+      let catchChance = getRdmChance(2);
       //console.log(catchChance);
 
       let pokeballThrow = document.querySelector('.pokeball1');
@@ -89,7 +89,7 @@ startBtn.addEventListener('click', function() {
         let goToPokedex = document.querySelector('.go-to-pokedex-btn');
         let goToPokedexLink = document.querySelector('.pokedex-link');
 
-        if(catchChance == 2) {
+        if(catchChance == 1) {
           refreshPage.classList.remove('hide');
           goToPokedex.classList.remove('hide');
 
@@ -116,7 +116,7 @@ startBtn.addEventListener('click', function() {
         sound(catchSoundPath);
         getCatchMessage(catchMessage);
       };
-      if(catchChance == 2) {
+      if(catchChance == 1) {
         storePokemon(data.name);
         // console.log(`Congrats! You caught ${data.name}!`);
         // console.log(localStorage);

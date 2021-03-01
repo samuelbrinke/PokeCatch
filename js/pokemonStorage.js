@@ -1,3 +1,5 @@
+export { storePokemon, getPokemonCollection };
+
 function storePokemon(pokemon) {
   let pokemons = JSON.parse(localStorage.getItem('pokemons'));
   if (pokemons === null) pokemons = { collection: [] };

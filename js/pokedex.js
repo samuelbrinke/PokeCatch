@@ -1,8 +1,11 @@
 import { fetchPokemons, fetchPokemon } from './fetch.js';
+import { getPokemonCollection } from './pokemonStorage.js';
 
 const pokedex = document.querySelector('.pokedex-cards');
 
 let loading = false;
+const collectedPokemon = getPokemonCollection()?.collection;
+
 loadPokemons();
 
 // Load pokemons
@@ -11,7 +14,6 @@ async function loadPokemons(limit = 20) {
   toggleLoader(true);
 
   const pokemons = await fetchPokemons();
-  // pokemons?.forEach((pokemon) => createPokemonCard(pokemon));
   const count = pokedex.childElementCount;
   pokemons.slice(count, count + limit).forEach((pokemon) => createPokemonCard(pokemon));
   toggleLoader();
@@ -29,9 +31,9 @@ function enableScroll() {
   window.onscroll = async () => {
     const height = document.documentElement.scrollHeight;
     const scroll = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
+    const clientHeight = window.innerHeight;
 
-    if (clientHeight + scroll >= height) {
+    if (Math.ceil(clientHeight + scroll) >= height) {
       await loadPokemons();
     }
   };
@@ -70,7 +72,6 @@ document.querySelector('.pokedex-search').addEventListener('search', async (e) =
 // Pokedex LoadBtn - Load more button
 document.querySelector('.btn-load-pokemon').addEventListener('click', async () => {
   toggleLoadButton(true);
-  await loadPokemons();
   enableScroll();
 });
 
@@ -101,7 +102,9 @@ function createPokemonCard(pokemon) {
   const title = document.createElement('h3');
   const text = document.createElement('p');
 
-  card.className = 'card';
+  collectedPokemon.includes(pokemon.name)
+    ? (card.className = 'card')
+    : (card.className = 'card not-collected');
   card.dataset.pokemonId = pokemon.name;
 
   img.className = 'card-img';
@@ -117,11 +120,6 @@ function createPokemonCard(pokemon) {
   title.textContent = pokemon.name;
 
   text.className = 'card-text';
-
-  // pokemon.types.forEach((item) => {
-  //   const type = item.type.name;
-  //   text.innerHTML += `<span class="pokemon-type ${type}">${type}</span>`;
-  // });
 
   content.append(title, text);
   card.append(img, content);

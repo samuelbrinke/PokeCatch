@@ -1,7 +1,12 @@
 export { fetchPokemons, fetchPokemon, resetNextUrl };
 
 const apiUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
-let apiNextUrl = '';
+let apiNextUrl = '?limit=1200';
+
+let pokemons = {
+  all: [],
+  cached: {},
+};
 
 async function request(url) {
   try {
@@ -14,21 +19,28 @@ async function request(url) {
 }
 
 async function fetchPokemon(name) {
-  return await request(apiUrl + name);
+  if (pokemons.cached[name]) {
+    return pokemons.cached[name];
+  } else {
+    const pokemon = await request(apiUrl + name);
+    pokemons.cached[pokemon.name] = pokemon;
+    return pokemon;
+  }
 }
 
 async function fetchPokemons() {
-  if (apiNextUrl === null) return;
-  const response = await request(apiUrl + apiNextUrl);
-  apiNextUrl = response.next != null ? new URL(response.next).search : response.next;
+  // if (apiNextUrl === null) return;
+  if (pokemons.all <= 0) {
+    const response = await request(apiUrl + apiNextUrl);
 
-  const promises = response.results?.map((pokemon) => request(pokemon.url));
-
-  const pokemons = await Promise.allSettled(promises).then((results) =>
-    results.filter((result) => result.status === 'fulfilled').map((result) => result.value)
-  );
-
-  return pokemons;
+    pokemons.all = response.results.map((pokemon) => {
+      const url = pokemon.url.split('/').filter(Boolean);
+      const id = url[url.length - 1];
+      pokemon.id = id;
+      return pokemon;
+    });
+  }
+  return pokemons.all;
 }
 
 function resetNextUrl() {

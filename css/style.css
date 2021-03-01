@@ -1,7 +1,26 @@
 .hero {
   min-height: 70vh;
-  background: url(../img/pokemon-hero.png);
+  background: url(../img/banner.gif);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
+  height: 95vh;
+  
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  /* text-xl text-center font-bold my-3 rounded-full text-black py-4 px-7 bg-white */
+  text-align: center;
+  font-weight: bold;
+  padding: 15px 20px;
+  color: black;
+  background: white;
+  font-size: 20px;
+  border-radius: 50px;
 }

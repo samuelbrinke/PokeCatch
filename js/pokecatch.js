@@ -55,7 +55,7 @@ startBtn.addEventListener('click', function() {
         return Math.floor(Math.random() * max) + 1;
       }
       let catchChance = getRdmChance(2);
-      //console.log(catchChance);
+      console.log(catchChance);
 
       let pokeballThrow = document.querySelector('.pokeball1');
       pokeballThrow.classList.add("pokeball1-center");
@@ -100,7 +100,6 @@ startBtn.addEventListener('click', function() {
           goToPokedexLink.innerText = 'Check out your pokedex';
         } else {
           refreshPage.classList.remove('hide');
-          refreshPage.classList.add('refresh-btn');
           refreshPage.innerText = 'Try again';
           refreshPage.addEventListener('click', function () {
             window.location.reload();

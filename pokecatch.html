@@ -32,6 +32,12 @@
         <div id="overlay"></div>
         <div class="pokebattle-wrapper flex flex-col justify-center">
           <h1 class="text-4xl text-center my-3 text-white">Gotta catch em' all!</h1>
+          <div class="mx-auto">
+            <form onsubmit="return false;" class="flex flex-col mx-auto">
+              <input type="text" id="trainer-name" class="py-1 mb-4" placeholder="Choose a name...">
+              <button type="submit" class="start-btn btn">Catch a Pokémon!</button>
+            </form>
+          </div>
           <div class="pokebattle-content hide">
             <div class="character-info-border info-border">
               <p>Ash Ketchup</p>
@@ -65,9 +71,6 @@
             <div class="flex">
               <button class="throw-btn mx-auto btn">Throw pokeball!</button>
             </div>
-          </div>
-          <div class="flex">
-            <button class="start-btn mx-auto btn">Catch a Pokémon!</button>
           </div>
         </div>
       </section>

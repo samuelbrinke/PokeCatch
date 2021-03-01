@@ -17,6 +17,11 @@ let startBtn = document.querySelector('.start-btn');
 startBtn.addEventListener('click', function() {
   startBtn.classList.add('hide');
 
+  let trainerName = document.createElement('p');
+  trainerName.innerText = document.getElementById('trainer-name').value;
+  
+  pokeBattle.appendChild(trainerName);
+
   let battleSoundPath = './sounds/battle.mp3';
   sound(battleSoundPath);
 

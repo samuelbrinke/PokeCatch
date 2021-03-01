@@ -14,6 +14,25 @@
   align-items: center;
 }
 
+input:focus {
+  outline: none;
+}
+
+input {
+  background: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 18px;
+}
+
+input::placeholder {
+  color: white;
+}
+
+button:focus {
+  outline: none;
+}
+
 .btn {
   /* text-xl text-center font-bold my-3 rounded-full text-black py-4 px-7 bg-white */
   text-align: center;

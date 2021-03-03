@@ -135,7 +135,7 @@ function createPokemonCard(pokemon) {
 
   collectedPokemon?.includes(pokemon.name)
     ? (card.className = 'card')
-    : (card.className = 'card ot-collected');
+    : (card.className = 'card not-collected');
   card.dataset.pokemonId = pokemon.name;
 
   img.className = 'card-img';

@@ -1,10 +1,10 @@
 .hero {
-  min-height: 70vh;
+  /* min-height: 70vh; */
   background: url(../img/banner.gif);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 95vh;
+  height: calc(100vh - 77px);
   
   color: white;
 

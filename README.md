@@ -2,9 +2,9 @@
 
 https://samuelbrinke.github.io/PokeCatch/
 
-- [ ] index.html, visar lite vad vårat projekt handlar om.
-- [ ] pokecatch.html, spelar spelet där man kan fånga pokémons.
-  - [ ] Kunna välja karaktär och namn.
+- [x] index.html, visar lite vad vårat projekt handlar om.
+- [x] pokecatch.html, spelar spelet där man kan fånga pokémons.
+  - [x] Kunna välja karaktär och namn. (Kunna välja karaktär kvar)
 - [ ] pokedex.html, se alla pokémons som man har fångat samt alla pokémons.
 
 EXTRA

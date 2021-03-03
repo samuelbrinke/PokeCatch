@@ -1,5 +1,10 @@
+import { fetchPokemon } from './fetch.js';
+import { storePokemon } from './pokemonStorage.js';
+
 let pokeBattle = document.querySelector('.pokebattle-wrapper');
 let pokeBattleContent = document.querySelector('.pokebattle-content');
+
+// Sound function that changes sound in the game.
 function sound(soundPath) {
   let createAudioTag = document.createElement('audio');
   let createSourceTag = document.createElement('source'); 
@@ -12,19 +17,58 @@ function sound(soundPath) {
   createAudioTag.appendChild(createSourceTag);
 }
 
+// Trainer global variables.
+let trainerNameInput = document.getElementById('trainer-name-input');
+let setTrainerName = document.getElementById('trainer-name');
+
+// Create change name button.
+let changeNameBtn = document.createElement('button');
+changeNameBtn.classList.add('btn', 'mb-2');
+changeNameBtn.innerText = 'Change name';
+
+// Check if trainer name exists in localstorage.
+function checkTrainerNameLS() {
+  if (localStorage.getItem("trainerName") != null) {
+    trainerNameInput.classList.add('hide');
+    setTrainerName.innerText = localStorage.getItem('trainerName');
+    trainerNameInput.parentNode.insertBefore(changeNameBtn, trainerNameInput.nextSibling);
+  }
+}
+checkTrainerNameLS();
+
+// Change name eventlistener.
+changeNameBtn.addEventListener('click', function() {
+  localStorage.removeItem('trainerName');
+  changeNameBtn.classList.add('hide');
+  trainerNameInput.classList.remove('hide');
+  setTrainerName.innerText = '';
+})
+
 let startBtn = document.querySelector('.start-btn');
 
-startBtn.addEventListener('click', function() {
-  startBtn.classList.add('hide');
-
-  let trainerName = document.createElement('p');
-  trainerName.innerText = document.getElementById('trainer-name').value;
+function initialGame() {
+  // Hides name input when starting game.
+  trainerNameInput.classList.add('hide');
   
-  pokeBattle.appendChild(trainerName);
+  // Check if trainerName is null, else, in localstorage.
+  if (localStorage.getItem("trainerName") === null && trainerNameInput.value != '') {
+    localStorage.setItem('trainerName', trainerNameInput.value);
+    setTrainerName.innerText = localStorage.getItem('trainerName');
+    trainerNameInput.classList.add('hide');
+  } else if (localStorage.getItem("trainerName") === null && trainerNameInput.value == '') {
+    setTrainerName.innerText = 'Ash Ketchum';
+  } else {
+    changeNameBtn.classList.add('hide');
+    trainerNameInput.classList.add('hide');
+    setTrainerName.innerText = '';
+    setTrainerName.innerText = localStorage.getItem('trainerName');
+  }
 
-  let battleSoundPath = './sounds/battle.mp3';
-  sound(battleSoundPath);
+  // Sets battle sound music.
+  sound('./sounds/battle.mp3');
 
+  // Removes start button and showing battle platforms.
+  startBtn.classList.add('hide');
 
   pokeBattleContent.classList.remove('hide');
 
@@ -33,44 +77,74 @@ startBtn.addEventListener('click', function() {
     document.querySelector('.pokemon-platform').classList.add('pokemon-platform-animation');
   }
   setTimeout(showBattlePlatform, 100);
+}
 
-  //Random number generator
+// Start game.
+startBtn.addEventListener('click', function() {
+  let pokeBattleContent = document.querySelector('.pokebattle-content');
+
+  initialGame();
+
+  //Random number generator.
   function getRdmPokemon(max) {
     return Math.floor(Math.random() * max) + 1;
   }
   let randomNum = getRdmPokemon(99);
 
-  async function getPokemon() {
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomNum}`);
-    let data = await response.json();
+  // Get pokemon.
+  async function getPokemon(pokemonId) {
+    let pokemon = await fetchPokemon(pokemonId);
+    console.log(pokemon)
+    getPokemonInfo(pokemon);
+    throwBall(pokemon);
+  }
 
-    let pokeImg = document.querySelector('.poke-img');
-    let pokeName = document.querySelector('.poke-name');
-    
-    pokeImg.src = data.sprites.versions['generation-v']['black-white']['animated'].front_default;
-    pokeName.innerText = data.name;
+  getPokemon(randomNum);
 
+  // Get pokemon info.
+  function getPokemonInfo(pokemon) {
+    let setPokemonImg = document.querySelector('.poke-img');
+    let setPokemonName = document.getElementById('pokemon-name');
+    let pokemonTypes = document.querySelector('.pokemon-types');
+    let getPokemonTypes = pokemon.types;
+
+    setPokemonName.innerText = pokemon.name
+    setPokemonImg.src = pokemon.sprites.versions['generation-v']['black-white']['animated'].front_default;
+    setPokemonImg.alt = 'Image not found';
+
+    getPokemonTypes.forEach(element => {
+      let pokemonType = document.createElement('span');
+
+      pokemonType.classList.add(element.type.name);
+      pokemonType.innerText = element.type.name;
+      pokemonTypes.appendChild(pokemonType);
+    });
+  }
+
+  // Throw ball.
+  function throwBall(pokemon) {
     let throwBtn = document.querySelector('.throw-btn');
 
+    // Throw ball event.
     throwBtn.addEventListener('click', function() {
       throwBtn.classList.add('hide');
       document.querySelector('.pokeball1').classList.remove('hide2');
 
+      // Generates 50% chance on catching.
       function getRdmChance(max) {
         return Math.floor(Math.random() * max) + 1;
       }
       let catchChance = getRdmChance(2);
-      console.log(catchChance);
 
       let pokeballThrow = document.querySelector('.pokeball1');
       pokeballThrow.classList.add("pokeball1-center");
       
       let pokeballAnimated = document.querySelector('.pokeball')
+
+      // Pokemon wobble.
       function catchPokemon() {
 
         setTimeout(() => {
-          console.log("animation ended");
-
           // Resets sound
           document.querySelector('audio').remove();
           
@@ -86,8 +160,10 @@ startBtn.addEventListener('click', function() {
           setTimeout(pokeballAnimationTimeout, 1300)
 
         }, 2000);
+        
       };
       
+      // Set a message if pokemon is caught or not.
       function getCatchMessage(catchMessage) {
         let catchMessageTag = document.createElement('h2');
         let refreshPage = document.querySelector('.refresh-btn');
@@ -116,31 +192,28 @@ startBtn.addEventListener('click', function() {
         pokeBattleContent.prepend(catchMessageTag);
       };
 
+      // Sets correct sound if pokemon is caught or not.
       function catchSound(catchMessage, catchSoundPath) {
         sound(catchSoundPath);
         getCatchMessage(catchMessage);
       };
       if(catchChance == 1) {
-        storePokemon(data.name);
-        // console.log(`Congrats! You caught ${data.name}!`);
-        // console.log(localStorage);
+        storePokemon(pokemon.name);
         catchPokemon();
 
         setTimeout(function() {
-        catchSound(`Congrats! You caught ${data.name}`, './sounds/catch.mp3')
+        catchSound(`Congrats! You caught ${pokemon.name}`, './sounds/catch.mp3')
         }, 8000)
 
       } else {
-        // console.log('The pokemon ran away!')
         catchPokemon();
 
         setTimeout(function() {
           pokeballAnimated.classList.add('fade');
-          catchSound(`Oh no! ${data.name} ran away...`, './sounds/pokeball-open.mp3');
+          catchSound(`Oh no! ${pokemon.name} ran away...`, './sounds/pokeball-open.mp3');
         }, 8000);
 
       }
-    });
-  };
-  getPokemon();
+    })
+  }
 });

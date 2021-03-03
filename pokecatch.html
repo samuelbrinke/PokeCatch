@@ -33,19 +33,20 @@
         <div class="pokebattle-wrapper flex flex-col justify-center">
           <h1 class="text-4xl text-center my-3 text-white">Gotta catch em' all!</h1>
           <div class="mx-auto">
-            <form onsubmit="return false;" class="flex flex-col mx-auto">
-              <input type="text" id="trainer-name" class="py-1 mb-4" placeholder="Choose a name...">
+            <form id="set-trainer-name" onsubmit="return false;" class="flex flex-col mx-auto">
+              <input type="text" id="trainer-name-input" class="py-1 mb-4" placeholder="Choose a name...">
               <button type="submit" class="start-btn btn">Catch a Pokémon!</button>
             </form>
           </div>
           <div class="pokebattle-content hide">
             <div class="character-info-border info-border">
-              <p>Ash Ketchup</p>
+              <p id="trainer-name"></p>
               <p>LVL: 99</p>
             </div>
             <div class="pokemon-info-border info-border">
-              <p>Bulbasaur</p>
-              <p>LVL: 49</p>
+              <p id="pokemon-name"></p>
+              <div class="pokemon-types flex">
+              </div>
             </div>
             <div class="pokemon-platform ml-auto">
               <div class="pokemon">
@@ -87,8 +88,8 @@
       </div>
     </footer>
 
-    <script src="js/fetch.js"></script>
+    <!-- <script src="js/fetch.js"></script> -->
     <script src="js/pokemonStorage.js"></script>
-    <script src="js/pokecatch.js"></script>
+    <script type="module" src="js/pokecatch.js"></script>
   </body>
 </html>

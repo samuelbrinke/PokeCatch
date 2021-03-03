@@ -2,6 +2,8 @@ import { fetchPokemons, fetchPokemon } from './fetch.js';
 import { getPokemonCollection } from './pokemonStorage.js';
 
 const pokedex = document.querySelector('.pokedex-cards');
+const filterCb = document.querySelector('input[name=collected]');
+const searchbox = document.querySelector('.pokedex-search');
 
 let loading = false;
 const collectedPokemon = getPokemonCollection()?.collection;
@@ -20,8 +22,18 @@ async function loadPokemons(limit = 20) {
 }
 
 async function selectPokemon(pokemonId) {
+  toggleModal();
   const pokemon = await fetchPokemon(pokemonId);
-  showPokemonModal(pokemon);
+  updatePokemonModal(pokemon);
+}
+
+async function filterCollectedPokemons() {
+  if (collectedPokemon != null) {
+    let pokemons = await fetchPokemons();
+    pokemons
+      .filter((pokemon) => collectedPokemon.includes(pokemon.name))
+      .forEach((pokemon) => createPokemonCard(pokemon));
+  }
 }
 
 // EventListeners
@@ -44,15 +56,18 @@ function disableScroll() {
 }
 
 // Pokedex Modal
-pokedex.addEventListener('click', async (e) => {
+pokedex.addEventListener('click', (e) => {
   if (e.target.classList.contains('card') && !e.target.classList.contains('not-collected')) {
     const id = e.target.dataset.pokemonId;
-    await selectPokemon(id);
+    selectPokemon(id);
   }
 });
 
+// Modal CloseBtn
+document.querySelector('.modal-btn').addEventListener('click', toggleModal);
+
 // Pokedex Searchbox
-document.querySelector('.pokedex-search').addEventListener('search', async (e) => {
+searchbox.addEventListener('search', async (e) => {
   const name = e.currentTarget.value.toLowerCase();
   pokedex.innerHTML = '';
 
@@ -64,19 +79,32 @@ document.querySelector('.pokedex-search').addEventListener('search', async (e) =
   }
 
   toggleLoadButton(true);
+  filterCb.checked = false;
   let pokemon = await fetchPokemons();
   pokemon = pokemon.find((i) => i.name === name);
   createPokemonCard(pokemon);
 });
 
+// Pokedex filter collected pokemons
+filterCb.addEventListener('change', (e) => {
+  pokedex.innerHTML = '';
+  searchbox.value = '';
+  if (e.currentTarget.checked) {
+    disableScroll();
+    toggleLoadButton(true);
+    filterCollectedPokemons();
+  } else {
+    toggleLoadButton();
+    loadPokemons();
+  }
+});
+
 // Pokedex LoadBtn - Load more button
 document.querySelector('.btn-load-pokemon').addEventListener('click', async () => {
   toggleLoadButton(true);
+  loadPokemons();
   enableScroll();
 });
-
-// Modal CloseBtn
-document.querySelector('.modal-btn').addEventListener('click', toggleModal);
 
 // Toggle class
 function toggleLoadButton(toggle = false) {
@@ -89,7 +117,10 @@ function toggleLoader(toggle = false) {
 }
 
 function toggleModal() {
-  document.querySelector('.modal').classList.toggle('hide');
+  const modal = document.querySelector('.modal');
+  modal.classList.toggle('hide');
+  modal.querySelector('.loader').classList.toggle('hide', false);
+  modal.querySelector('.modal-content').classList.toggle('hide', true);
 }
 
 // Update DOM
@@ -102,15 +133,19 @@ function createPokemonCard(pokemon) {
   const title = document.createElement('h3');
   const text = document.createElement('p');
 
-  collectedPokemon.includes(pokemon.name)
+  collectedPokemon?.includes(pokemon.name)
     ? (card.className = 'card')
-    : (card.className = 'card not-collected');
+    : (card.className = 'card ot-collected');
   card.dataset.pokemonId = pokemon.name;
 
   img.className = 'card-img';
-  img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
-  // pokemon.sprites.other.dream_world.front_default ??
-  // pokemon.sprites.other['official-artwork'].front_default ?? '#';
+  img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`;
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`; //official-artwork
+  };
+  img.width = '160';
+  img.height = '160';
   img.alt = pokemon.name;
   img.loading = 'lazy';
 
@@ -128,20 +163,24 @@ function createPokemonCard(pokemon) {
 }
 
 // Modal
-function showPokemonModal(pokemon) {
-  console.log(pokemon);
+function updatePokemonModal(pokemon) {
+  // console.log(pokemon);
   // Elements
   const modal = document.querySelector('.modal');
-  const img = modal.querySelector('.modal-img');
-  const name = modal.querySelector('.pokemon-name');
-  const type = modal.querySelector('.type');
-  const height = modal.querySelector('.details-height');
-  const weight = modal.querySelector('.details-weight');
-  const stats = modal.querySelectorAll('.progress-done');
+  const modalLoader = modal.querySelector('.loader');
+  const modalContent = modal.querySelector('.modal-content');
+  const img = modalContent.querySelector('.modal-img');
+  const name = modalContent.querySelector('.pokemon-name');
+  const type = modalContent.querySelector('.type');
+  const height = modalContent.querySelector('.details-height');
+  const weight = modalContent.querySelector('.details-weight');
+  const stats = modalContent.querySelectorAll('.progress-done');
 
-  img.src =
-    // pokemon.sprites.other.dream_world.front_default ??
-    pokemon.sprites.other?.['official-artwork'].front_default ?? '#';
+  img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`;
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`; //official-artwork
+  };
 
   name.textContent = pokemon.name;
 
@@ -167,5 +206,6 @@ function showPokemonModal(pokemon) {
     .map((type) => `<span class="pokemon-type ${type.type.name}">${type.type.name}</span>`)
     .join(' ');
 
-  toggleModal();
+  modalLoader.classList.toggle('hide', true);
+  modalContent.classList.toggle('hide', false);
 }

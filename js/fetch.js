@@ -1,4 +1,4 @@
-export { fetchPokemons, fetchPokemon, resetNextUrl };
+export { fetchPokemons, fetchPokemon };
 
 const apiUrl = new URL('https://pokeapi.co/api/v2/pokemon/');
 let apiNextUrl = '?limit=1200';
@@ -19,13 +19,10 @@ async function request(url) {
 }
 
 async function fetchPokemon(name) {
-  if (pokemons.cached[name]) {
-    return pokemons.cached[name];
-  } else {
-    const pokemon = await request(apiUrl + name);
-    pokemons.cached[pokemon.name] = pokemon;
-    return pokemon;
+  if (!pokemons.cached[name]) {
+    pokemons.cached[name] = await request(apiUrl + name);
   }
+  return pokemons.cached[name];
 }
 
 async function fetchPokemons() {
@@ -41,8 +38,4 @@ async function fetchPokemons() {
     });
   }
   return pokemons.all;
-}
-
-function resetNextUrl() {
-  apiNextUrl = '';
 }

@@ -25,6 +25,12 @@
   animation: loader-spin 1s linear infinite;
 }
 
+.loader-modal {
+  align-self: center;
+  border-top: 6px solid rgb(255, 255, 255);
+  border-bottom: 6px solid rgb(255, 255, 255);
+}
+
 @keyframes loader-spin {
   0% {
     transform: rotate(0deg);
@@ -47,6 +53,8 @@
 
 .card-img {
   height: 10rem;
+  max-width: 10rem;
+  width: 10rem;
   width: auto;
   margin: 0 auto;
 }
@@ -78,7 +86,7 @@
 
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -94,6 +102,7 @@
   width: 100%;
   max-height: 250px;
   padding: 1rem;
+  padding-top: 3rem;
   object-fit: contain;
   /* background-color: #378d3d; */
 }

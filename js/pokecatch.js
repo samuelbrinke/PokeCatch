@@ -41,16 +41,19 @@ changeNameBtn.addEventListener('click', function() {
   localStorage.removeItem('trainerName');
   changeNameBtn.classList.add('hide');
   getTrainerName.classList.remove('hide');
+  setTrainerName.innerText = '';
 })
 
 let startBtn = document.querySelector('.start-btn');
 
 function initialGame() {
   // Check if trainerName is null, else, in localstorage.
-  if (localStorage.getItem("trainerName") === null) {
+  if (localStorage.getItem("trainerName") === null && getTrainerName.value != '') {
     localStorage.setItem('trainerName', getTrainerName.value);
     setTrainerName.innerText = localStorage.getItem('trainerName');
     getTrainerName.classList.add('hide');
+  } else if (localStorage.getItem("trainerName") === null && getTrainerName.value == '') {
+    setTrainerName.innerText = 'Ash Ketchum';
   } else {
     changeNameBtn.classList.add('hide');
     getTrainerName.classList.add('hide');
@@ -102,9 +105,9 @@ startBtn.addEventListener('click', function() {
     let pokemonTypes = document.querySelector('.pokemon-types');
     let getPokemonTypes = pokemon.types;
 
-
     setPokemonName.innerText = pokemon.name
     setPokemonImg.src = pokemon.sprites.versions['generation-v']['black-white']['animated'].front_default;
+    setPokemonImg.alt = 'Image not found';
 
     getPokemonTypes.forEach(element => {
       let pokemonType = document.createElement('span');

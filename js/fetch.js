@@ -18,10 +18,9 @@ async function request(url) {
   }
 }
 
-function fetchPokemon(name) {
+async function fetchPokemon(name) {
   if (!pokemons.cached[name]) {
-    const pokemon = request(apiUrl + name);
-    pokemons.cached[name] = pokemon;
+    pokemons.cached[name] = await request(apiUrl + name);
   }
   return pokemons.cached[name];
 }

@@ -18,7 +18,7 @@ function sound(soundPath) {
 }
 
 // Trainer global variables.
-let getTrainerName = document.getElementById('trainer-name-input');
+let trainerNameInput = document.getElementById('trainer-name-input');
 let setTrainerName = document.getElementById('trainer-name');
 
 // Create change name button.
@@ -29,9 +29,9 @@ changeNameBtn.innerText = 'Change name';
 // Check if trainer name exists in localstorage.
 function checkTrainerNameLS() {
   if (localStorage.getItem("trainerName") != null) {
-    getTrainerName.classList.add('hide');
+    trainerNameInput.classList.add('hide');
     setTrainerName.innerText = localStorage.getItem('trainerName');
-    getTrainerName.parentNode.insertBefore(changeNameBtn, getTrainerName.nextSibling);
+    trainerNameInput.parentNode.insertBefore(changeNameBtn, trainerNameInput.nextSibling);
   }
 }
 checkTrainerNameLS();
@@ -40,23 +40,26 @@ checkTrainerNameLS();
 changeNameBtn.addEventListener('click', function() {
   localStorage.removeItem('trainerName');
   changeNameBtn.classList.add('hide');
-  getTrainerName.classList.remove('hide');
+  trainerNameInput.classList.remove('hide');
   setTrainerName.innerText = '';
 })
 
 let startBtn = document.querySelector('.start-btn');
 
 function initialGame() {
+  // Hides name input when starting game.
+  trainerNameInput.classList.add('hide');
+  
   // Check if trainerName is null, else, in localstorage.
-  if (localStorage.getItem("trainerName") === null && getTrainerName.value != '') {
-    localStorage.setItem('trainerName', getTrainerName.value);
+  if (localStorage.getItem("trainerName") === null && trainerNameInput.value != '') {
+    localStorage.setItem('trainerName', trainerNameInput.value);
     setTrainerName.innerText = localStorage.getItem('trainerName');
-    getTrainerName.classList.add('hide');
-  } else if (localStorage.getItem("trainerName") === null && getTrainerName.value == '') {
+    trainerNameInput.classList.add('hide');
+  } else if (localStorage.getItem("trainerName") === null && trainerNameInput.value == '') {
     setTrainerName.innerText = 'Ash Ketchum';
   } else {
     changeNameBtn.classList.add('hide');
-    getTrainerName.classList.add('hide');
+    trainerNameInput.classList.add('hide');
     setTrainerName.innerText = '';
     setTrainerName.innerText = localStorage.getItem('trainerName');
   }
